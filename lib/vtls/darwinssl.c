@@ -1885,6 +1885,12 @@ static CURLcode darwinssl_connect_step1(struct connectdata *conn,
       case 0x0092: /* TLS_RSA_PSK_WITH_RC4_128_SHA */
         break;
       default: /* enable everything else */
+        if(SSL_CONN_CONFIG(cipher_list)) {
+            if(!strstr(SSL_CONN_CONFIG(cipher_list),SSLCipherNameForNumber(all_cipher[i]))
+            {
+                continue;
+            }
+        }
         allowed_ciphers[allowed_ciphers_count++] = all_ciphers[i];
         break;
     }
